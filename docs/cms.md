@@ -22,13 +22,31 @@ land in your working tree as ordinary file edits for you to commit.
 
 This is the fastest path and the one to use while the schema is still moving.
 
-## Editing in the browser on the live site
+## Editing on the live site — deliberately not set up
 
-The GitHub backend needs an OAuth handshake, and **GitHub Pages cannot provide
-it** — Pages serves static files and the handshake needs a server that holds a
-client secret. So one small piece has to live somewhere else. Two options:
+**Decision: `/admin` works locally only. This is a choice, not a gap.**
 
-### Option A — a hosted OAuth relay (recommended)
+Everything the CMS does, it does through the local backend above. Wiring up the
+live site would buy exactly one thing: writing case studies from a machine that
+isn't Max's. That isn't worth a permanently deployed service and a rotating
+secret today. Revisit it if and when writing from a phone or a borrowed laptop
+actually comes up.
+
+The rest of this section is the map for that day. Nothing below is required now.
+
+### Why the live site can't just work
+
+Decap authenticates you against GitHub so the commits it makes are genuinely
+yours. GitHub hands back a temporary code that has to be exchanged for a token,
+and that exchange needs a client secret — which cannot live in the browser
+without being handed to everyone who views the page. So the exchange needs a
+server, and **GitHub Pages serves static files only**. One small piece has to
+live somewhere else.
+
+Note this is only ever about *Max logging in to write*. The portfolio itself is
+fully static and public; no visitor authenticates against anything.
+
+### Option A — a hosted OAuth relay
 
 Deploy one of the ready-made Decap OAuth clients (Netlify Function, Vercel
 serverless function, Cloudflare Worker — all are a few lines and free at this
@@ -42,15 +60,21 @@ scale), then:
 3. Uncomment `base_url` and `auth_endpoint` in `config.yml` and point `base_url`
    at the relay.
 
-### Option B — move the site to a host with built-in auth
+### Option B — move to a host with built-in auth
 
-Netlify and Cloudflare Pages both provide the OAuth endpoint themselves, which
-removes the relay entirely. This is a bigger change (it drops GitHub Pages and
-[`docs/deployment.md`](./deployment.md) stops applying), but it is worth
-considering if browser editing turns out to matter more than staying on Pages.
+Netlify ships the OAuth endpoint itself (Decap started life as Netlify CMS), so
+there is no relay, no OAuth app and no secret to rotate — connect the repo and
+it works. It is the least machinery by some distance. The cost is that it drops
+GitHub Pages and [`docs/deployment.md`](./deployment.md) stops applying. The
+Astro build itself is host-agnostic, so the move is mostly deleting a workflow.
 
-Until one of these is done, `/admin` loads on the live site but cannot log in.
-Local editing works either way.
+If browser editing ever becomes the priority, start here rather than with
+Option A.
+
+### What happens meanwhile
+
+`/admin` is deployed and loads on the live site, but the login button cannot
+complete. That is expected. Local editing is unaffected.
 
 ## Keeping the CMS and the schema in step
 

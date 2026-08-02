@@ -24,7 +24,7 @@ deliberate gestures rather than a page full of them.
 | Framework  | Astro (static output) | No SSR. Zero client JS unless a feature genuinely needs it. |
 | Styling    | Plain CSS + custom properties | No Tailwind, no CSS-in-JS. Scoped `<style>` blocks in `.astro` files. |
 | Content    | Astro content collections | Markdown in `src/content/projects/`, schema in `src/content.config.ts`. |
-| CMS        | Decap CMS | `public/admin/`. Writes markdown back to the repo. |
+| CMS        | Decap CMS | `public/admin/`. Writes markdown back to the repo. Local editing only, by decision — see `docs/cms.md`. |
 | Hosting    | GitHub Pages via Actions | `.github/workflows/deploy.yml`, pushes to `main` only. |
 | Design     | Figma via MCP | `.mcp.json`, workflow in `docs/design-to-code.md`. |
 

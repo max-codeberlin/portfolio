@@ -8,10 +8,12 @@ backend:
   name: github
   repo: max-zwei/portfolio
   branch: main
-  # Decap's GitHub backend needs an OAuth relay to complete the login handshake;
-  # GitHub Pages cannot host one because it serves static files only.
-  # Point base_url at your deployed OAuth client, then uncomment both lines.
-  # See docs/cms.md for the two supported options.
+  # Login on the LIVE site is deliberately not set up — editing happens locally
+  # via `npx decap-server` (see local_backend below). Decap's GitHub backend
+  # needs an OAuth relay to complete the handshake and GitHub Pages cannot host
+  # one, so `/admin` loads in production but cannot log in. That is expected.
+  # If that ever needs to change, point base_url at a deployed OAuth client and
+  # uncomment both lines — docs/cms.md has the two routes written up.
   # base_url: https://<your-oauth-relay>
   # auth_endpoint: auth
   commit_messages:

@@ -151,12 +151,16 @@ yet.
 - Design tokens written into Figma as Variables, names matched to the CSS
 
 **Needs a human (can't be done from code)**
-- **Settings → Pages → Source: GitHub Actions** — the first deploy fails without
-  it ([docs/deployment.md](docs/deployment.md))
 - Custom domain: DNS records, then `public/CNAME` and `site` in `astro.config.mjs`
-- An OAuth relay if you want to edit at `/admin` on the live site
-  ([docs/cms.md](docs/cms.md)) — local editing already works
+  ([docs/deployment.md](docs/deployment.md))
 - Tuning the palette in Figma — the hexes there are a working set, not final
+
+**Decided, so don't "fix" it**
+- **No dark mode.** One colour scheme. Don't add `prefers-color-scheme` blocks.
+- **`/admin` logs in locally only**, via `npx decap-server`. On the live site it
+  loads but cannot log in, because GitHub Pages can't run the OAuth exchange.
+  That was judged not worth a deployed service — see [docs/cms.md](docs/cms.md)
+  for the routes if it ever changes.
 
 **Next**
 - Real case studies
