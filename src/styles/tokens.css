@@ -9,9 +9,10 @@
  * changes in Figma, change it here (and in tokens.json) — never hardcode a hex
  * value in a component. See docs/design-to-code.md for the sync workflow.
  *
- * NOTE: hex values are the current working palette. They are the values to
- * reconcile against the Figma Variables once the palette collection is
- * published — the token *names* are the stable contract, not the hexes.
+ * The Figma file now carries these same tokens as Variables, named identically
+ * (`surface/default` there is `--surface-default` here). The hex values are a
+ * working palette and are expected to change once Max tunes them in Figma —
+ * the token *names* are the stable contract, not the hexes.
  */
 
 :root {
@@ -131,8 +132,12 @@
   --content-max: 72rem;     /* page container */
 
   /* ---------------------------------------------------------------
-   * 4. SEMANTIC TOKENS — light mode (default)
+   * 4. SEMANTIC TOKENS
    * Components consume ONLY these.
+   *
+   * One set, no modes. If a dark scheme is ever wanted, it goes here as
+   * a remap of these semantics — the primitives above stay untouched and
+   * no component has to change. That is the whole point of the two tiers.
    * ------------------------------------------------------------- */
 
   --surface-default: var(--color-neutral-050);
@@ -162,66 +167,4 @@
 
   --focus-ring: 2px solid var(--border-focus);
   --focus-ring-offset: 2px;
-}
-
-/* ---------------------------------------------------------------
- * 5. SEMANTIC TOKENS — dark mode
- * Only semantics get remapped; primitives never change.
- * ------------------------------------------------------------- */
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --surface-default: var(--color-neutral-900);
-    --surface-raised: var(--color-neutral-800);
-    --surface-sunken: var(--color-neutral-900);
-    --surface-inverse: var(--color-neutral-050);
-    --surface-accent: var(--color-yuzu-500);
-
-    --text-primary: var(--color-neutral-050);
-    --text-secondary: var(--color-neutral-300);
-    --text-inverse: var(--color-neutral-900);
-    --text-accent: var(--color-yuzu-300);
-    --text-on-accent: var(--color-neutral-900);
-
-    --border-subtle: var(--color-neutral-700);
-    --border-strong: var(--color-neutral-600);
-    --border-focus: var(--color-yuzu-400);
-
-    --brand-secondary: var(--color-rote-beete-300);
-    --brand-highlight: var(--color-tomaten-300);
-    --brand-calm: var(--color-lieblingsort-300);
-
-    --status-in-progress: var(--color-tomaten-300);
-    --status-completed: var(--color-lieblingsort-300);
-
-    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-    --shadow-md: 0 4px 16px rgb(0 0 0 / 0.45);
-    --shadow-lg: 0 12px 40px rgb(0 0 0 / 0.55);
-  }
-}
-
-/* Explicit opt-in dark, for a future theme toggle. */
-:root[data-theme='dark'] {
-  --surface-default: var(--color-neutral-900);
-  --surface-raised: var(--color-neutral-800);
-  --surface-sunken: var(--color-neutral-900);
-  --surface-inverse: var(--color-neutral-050);
-  --surface-accent: var(--color-yuzu-500);
-
-  --text-primary: var(--color-neutral-050);
-  --text-secondary: var(--color-neutral-300);
-  --text-inverse: var(--color-neutral-900);
-  --text-accent: var(--color-yuzu-300);
-  --text-on-accent: var(--color-neutral-900);
-
-  --border-subtle: var(--color-neutral-700);
-  --border-strong: var(--color-neutral-600);
-  --border-focus: var(--color-yuzu-400);
-
-  --brand-secondary: var(--color-rote-beete-300);
-  --brand-highlight: var(--color-tomaten-300);
-  --brand-calm: var(--color-lieblingsort-300);
-
-  --status-in-progress: var(--color-tomaten-300);
-  --status-completed: var(--color-lieblingsort-300);
 }

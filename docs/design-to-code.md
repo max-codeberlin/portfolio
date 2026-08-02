@@ -58,8 +58,8 @@ every agent session picks them up.
    has no token, that is a signal — add the token, don't inline the value.
 2. **Components consume semantic tokens, not primitives.** Use
    `var(--text-secondary)`, never `var(--color-neutral-500)`. Primitives exist so
-   semantics have something to point at; a component reaching past the semantic
-   layer breaks dark mode silently.
+   semantics have something to point at; the semantic layer is the only place a
+   value can be changed once and land everywhere it belongs.
 3. **A Figma variable and a CSS custom property with the same meaning must have
    the same name.** `semantic/text/secondary` ↔ `--text-secondary`. When names
    match, drift is visible; when they don't, it's invisible.
@@ -89,20 +89,39 @@ DTCG-shaped, so a token plugin can import it, or the `use_figma` tool can write
 the variables directly. Load the `figma-use` skill first — it is a hard
 prerequisite for that tool, not a suggestion.
 
-Collection naming in Figma mirrors the JSON top level:
+### The collections, as built
 
-| Figma collection | JSON key    | CSS prefix |
-| ---------------- | ----------- | ---------- |
-| Color            | `color`     | `--color-*` |
-| Semantic         | `semantic`  | `--surface-*`, `--text-*`, `--border-*`, `--brand-*`, `--status-*` |
-| Typography       | `font`      | `--font-*`, `--line-height-*`, `--letter-spacing-*` |
-| Spacing          | `space`     | `--space-*` |
-| Radius           | `radius`    | `--radius-*` |
-| Motion           | `motion`    | `--duration-*`, `--easing-*` |
+The variables exist in the Figma file today — 94 of them across 7 collections,
+every one carrying a `$description` and WEB code syntax.
 
-Only the **Semantic** collection has light/dark modes. Primitives are
-mode-independent by design — if a primitive needs to change between modes, the
-semantic layer is doing its job wrong.
+| Figma collection | Vars | JSON key   | CSS prefix |
+| ---------------- | ---- | ---------- | ---------- |
+| Color            | 35   | `color`    | `--color-*` |
+| Semantic         | 19   | `semantic` | `--surface-*`, `--text-*`, `--border-*`, `--brand-*`, `--status-*` |
+| Typography       | 19   | `font`     | `--font-*`, `--line-height-*`, `--letter-spacing-*` |
+| Spacing          | 9    | `space`    | `--space-*` |
+| Radius           | 4    | `radius`   | `--radius-*` |
+| Motion           | 5    | `motion`   | `--duration-*`, `--easing-*` |
+| Elevation        | 3    | —          | `--shadow-*` |
+
+**The variable name *is* the CSS custom property.** Code syntax is set so that
+`surface/default` reports as `var(--surface-default)` in Dev Mode — swap `/` for
+`-`, prefix `--`, and you have the token to type. That mechanical correspondence
+is the whole anti-drift mechanism; don't break it when adding tokens.
+
+Two things Figma can't hold faithfully, so they live in code:
+
+- **Fluid type.** `--font-size-*` is a `clamp()` in CSS. Figma is a fixed-size
+  medium, so `font/size/*` carries the desktop (maximum) end of each clamp. The
+  browser interpolates below it.
+- **Elevation.** Figma variables have no shadow type, so `shadow/*` are STRING
+  variables holding the CSS value, paired with matching `Elevation / sm|md|lg`
+  effect styles for actually applying them on canvas. Change one, change both.
+
+**Every collection has exactly one mode**, named `Value`. There is no light/dark
+split — one colour scheme, by decision. If a dark scheme is ever wanted, it is
+added as a second mode on the **Semantic** collection only; the primitives and
+every component stay untouched. That is what the two-tier split buys you.
 
 ## Code Connect
 

@@ -32,9 +32,14 @@ deliberate gestures rather than a page full of them.
 
 **Tokens.** Never hardcode a value that exists as a token. No hex colours, no
 `16px`, no `font-family` in components. Use the *semantic* layer
-(`var(--text-secondary)`), never primitives (`var(--color-neutral-500)`) —
-reaching past the semantic layer breaks dark mode without any visible error.
-If a design needs a value that has no token, add the token; don't inline it.
+(`var(--text-secondary)`), never primitives (`var(--color-neutral-500)`) — the
+semantic layer is the only place a value can be changed once and land
+everywhere. If a design needs a value that has no token, add the token; don't
+inline it.
+
+**One colour scheme.** There is no dark mode, by decision. Don't add
+`prefers-color-scheme` blocks or a theme toggle. If it's ever wanted, it's a
+remap of the semantic tokens — not a change to any component.
 
 **Accessibility is part of "done", not a follow-up.**
 - Semantic HTML first. A `<div>` with a click handler is a bug.
@@ -42,7 +47,7 @@ If a design needs a value that has no token, add the token; don't inline it.
 - Every image needs alt text — the content schema fails the build without it.
 - Respect `prefers-reduced-motion`; the global stylesheet already does, so don't
   reintroduce unconditional animation.
-- Both colour schemes must work. Check dark mode before saying a screen is done.
+- Check contrast. One scheme means no dark-mode escape hatch for a weak pairing.
 
 **Static and fast.** This is a portfolio, not an app. Adding a client-side
 framework, a state library, or an analytics script needs a reason and an ask.

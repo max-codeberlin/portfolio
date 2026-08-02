@@ -98,21 +98,25 @@ Tokens live in [`src/styles/tokens.css`](src/styles/tokens.css) in two tiers:
 - **Primitives** — raw values, named after the thing: `--color-yuzu-400`,
   `--space-md`. Never used directly in a component.
 - **Semantics** — what components actually consume: `--text-secondary`,
-  `--surface-raised`, `--status-in-progress`. These are what get remapped for
-  dark mode.
+  `--surface-raised`, `--status-in-progress`. One set, no modes — there is no
+  dark mode, by decision.
 
 The palette is nature-inspired and named in German: **Yuzu** (citrus yellow, the
 signature accent), **Rote Beete** (beetroot, the deep counterweight), **Tomaten**
 (tomato, used sparingly as a signal), **Lieblingsort** (a grounded green), plus
 warm-tinted neutrals so nothing sits coldly against them.
 
-**The one rule that matters:** a component that reaches past the semantic layer
-to a primitive breaks dark mode silently — no error, no failed build, just a
-screen that goes wrong for half your visitors. Use semantics.
+**The one rule that matters:** components use semantics, never primitives. A
+component wired straight to `--color-neutral-500` can only be changed by hunting
+down every place it appears. Wired to `--text-secondary`, it changes once. This
+is also what makes a dark mode a half-hour job rather than a rewrite, should it
+ever be wanted.
 
-The hex values currently in the repo are the working palette and are the values
-to reconcile against Figma Variables once that collection is published. **The
-token *names* are the stable contract, not the hexes.**
+These tokens also exist as **Figma Variables** in the portfolio file — 94 of
+them across 7 collections, with names that match the CSS one-for-one
+(`surface/default` in Figma is `--surface-default` in code, and Dev Mode reports
+it that way). Tune the values in Figma; the names don't move. **The token
+*names* are the stable contract, not the hexes.**
 
 ## Adding a case study
 
@@ -138,12 +142,13 @@ yet.
 
 **Done**
 - Astro project, static output, type-checking clean
-- Design tokens (CSS custom properties + DTCG JSON), light and dark
+- Design tokens (CSS custom properties + DTCG JSON), one scheme
 - Project content schema + documentation
 - Decap CMS wired to the schema, editorial workflow on
 - v0.1 homepage — name, role, slogan, one brand gesture
 - GitHub Actions: deploy on `main`, CI on PRs
 - Figma MCP connection verified, handoff workflow documented
+- Design tokens written into Figma as Variables, names matched to the CSS
 
 **Needs a human (can't be done from code)**
 - **Settings → Pages → Source: GitHub Actions** — the first deploy fails without
@@ -151,7 +156,7 @@ yet.
 - Custom domain: DNS records, then `public/CNAME` and `site` in `astro.config.mjs`
 - An OAuth relay if you want to edit at `/admin` on the live site
   ([docs/cms.md](docs/cms.md)) — local editing already works
-- Publishing the Figma Variable collections so the token hexes can be reconciled
+- Tuning the palette in Figma — the hexes there are a working set, not final
 
 **Next**
 - Real case studies
@@ -164,7 +169,7 @@ Read [CLAUDE.md](CLAUDE.md) before making changes. The short version:
 
 1. **Never hardcode a value that has a token.** Semantics, not primitives.
 2. **Accessibility is part of "done"** — semantic HTML, visible focus states, alt
-   text, reduced-motion, and both colour schemes working.
+   text, reduced-motion, and contrast that holds up.
 3. **Don't invent content.** Placeholder copy must read as placeholder.
 4. **Static and fast.** Adding client-side JS needs a reason and an ask.
 5. **Run `npm run check` before committing.** Zero warnings.
