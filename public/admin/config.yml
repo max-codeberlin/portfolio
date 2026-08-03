@@ -42,25 +42,13 @@ collections:
     format: frontmatter
     create: true
     slug: '{{slug}}'
-    summary: '{{title}} ({{year}}) — {{status}}'
+    summary: '{{title}} ({{year}})'
     sortable_fields: [year, title]
-    view_groups:
-      - label: Status
-        field: status
     fields:
       - label: Title
         name: title
         widget: string
         hint: Project name. Shown as the page heading and in listings.
-
-      - label: Status
-        name: status
-        widget: select
-        default: in-progress
-        options:
-          - { label: In progress, value: in-progress }
-          - { label: Completed, value: completed }
-        hint: Showing work in progress is intentional — it is not an apology.
 
       - label: How might we…
         name: hmw
@@ -103,6 +91,36 @@ collections:
         hint: >-
           REQUIRED if a cover image is set — the build fails without it. Describe
           the image; don't repeat the title.
+
+      - label: Figma URL
+        name: figmaUrl
+        widget: string
+        required: false
+        pattern: ['^https?://.+', 'Must be a full URL starting with http(s)://']
+        hint: The Figma file or frame this was designed in.
+
+      - label: GitHub repo URL
+        name: repoUrl
+        widget: string
+        required: false
+        pattern: ['^https?://.+', 'Must be a full URL starting with http(s)://']
+        hint: Where the code lives, if the project has a repo.
+
+      - label: Artefacts
+        name: artefacts
+        widget: list
+        required: false
+        label_singular: Artefact
+        summary: '{{fields.alt}}'
+        hint: >-
+          Sketches, flows, screens, photos. Alt text is required on every one —
+          the build fails without it.
+        fields:
+          - { label: Image, name: src, widget: image }
+          - label: Alt text
+            name: alt
+            widget: string
+            hint: Describe what the image shows. Not optional.
 
       - label: Case study
         name: body

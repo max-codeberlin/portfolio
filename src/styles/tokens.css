@@ -162,7 +162,12 @@
   --brand-highlight: var(--color-tomaten-400);
   --brand-calm: var(--color-lieblingsort-400);
 
-  /* Project status — used by project cards, see src/content.config.ts */
+  /*
+   * Status. No content field drives these any more — the `status` field was
+   * removed from the project schema. Kept because "in progress vs finished" is
+   * still a distinction the site makes, and a design will likely want to show
+   * it some other way. Delete them if that turns out not to be true.
+   */
   --status-in-progress: var(--color-tomaten-400);
   --status-completed: var(--color-lieblingsort-400);
 

@@ -13,8 +13,6 @@ import { z } from 'zod';
  * costs three files to maintain, so speculative fields are expensive.
  */
 
-export const PROJECT_STATUSES = ['in-progress', 'completed'] as const;
-
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: ({ image }) =>
@@ -22,9 +20,6 @@ const projects = defineCollection({
       .object({
         /** Project name. Used as the page <h1> and in listings. */
         title: z.string().min(1),
-
-        /** Where the work stands. Drives the status pill colour. */
-        status: z.enum(PROJECT_STATUSES),
 
         /**
          * The "How might we ..." framing that opens the case study, written
@@ -47,6 +42,25 @@ const projects = defineCollection({
 
         /** Alt text for the cover. Required whenever a cover is set. */
         coverAlt: z.string().optional(),
+
+        /** Link to the Figma file or frame the work was designed in. */
+        figmaUrl: z.url().optional(),
+
+        /** Link to the GitHub repository, where the project has one. */
+        repoUrl: z.url().optional(),
+
+        /**
+         * Supporting images — sketches, flows, screens, photos of the thing.
+         * Alt text is required on every one; there is no cover-style escape.
+         */
+        artefacts: z
+          .array(
+            z.object({
+              src: image(),
+              alt: z.string().min(1),
+            }),
+          )
+          .default([]),
       })
       // A cover without alt text is an accessibility bug, so fail the build.
       .refine((data) => !data.cover || Boolean(data.coverAlt), {

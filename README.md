@@ -43,8 +43,8 @@ but it's the most direct statement of how this codebase wants to be treated.
 Three things the site has to do: show the work, show the person, and show
 what's currently being worked on. That third one is the one most portfolios
 skip — work in progress is meant to be visible here, not hidden until it's
-polished. The content schema has a `status: in-progress` field for exactly that
-reason.
+polished. Case studies can link straight to the Figma file and the repo, so a
+project can be shown mid-flight rather than only once it's been tidied up.
 
 **The tone: professional, but not plain.** Restrained isn't the same as boring.
 One or two confident gestures, not a page competing with itself for attention.
@@ -136,8 +136,8 @@ Tokens live in [`src/styles/tokens.css`](src/styles/tokens.css) in two tiers:
 - **Primitives** — raw values, named after the thing: `--color-yuzu-400`,
   `--space-md`. Never used directly in a component.
 - **Semantics** — what components actually consume: `--text-secondary`,
-  `--surface-raised`, `--status-in-progress`. One set, no modes — there is no
-  dark mode, by decision.
+  `--surface-raised`, `--border-focus`. One set, no modes — there is no dark
+  mode, by decision.
 
 The palette is nature-inspired and named in German: **Yuzu** (citrus yellow, the
 signature accent), **Rote Beete** (beetroot, the deep counterweight), **Tomaten**
@@ -163,8 +163,9 @@ create `src/content/projects/<slug>.md` with the frontmatter documented in
 [docs/content-schema.md](docs/content-schema.md).
 
 Every project opens with a **"How might we …"** framing (the `hmw` field) so the
-portfolio reads as one point of view rather than a pile of deliverables. And
-`status: in-progress` is a feature — showing current work is the point.
+portfolio reads as one point of view rather than a pile of deliverables. Each
+can also carry `figmaUrl`, `repoUrl` and a list of `artefacts` — the working
+files behind the retelling.
 
 A field lives in three places and all three must agree, or the CMS will save
 frontmatter that the build then rejects:
@@ -202,7 +203,7 @@ yet.
   log in without an OAuth relay, so shipping it would put a 5 MB third-party
   script on the live domain for nothing. Editing happens via `npx decap-server`.
   See [docs/cms.md](docs/cms.md).
-- **The content schema is deliberately small.** Eight fields. Adding one costs
+- **The content schema is deliberately small.** Ten fields. Adding one costs
   three files to keep in sync, so add them when a design needs them — not in
   advance.
 
