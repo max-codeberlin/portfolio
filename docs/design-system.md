@@ -20,7 +20,7 @@ decided sections was invented to fill a gap.
 say something, the thing is also said in text or shape: the CV timeline dots are
 backed by a written `.entry__kind` label (`src/pages/resume.astro:240`), and the
 styleguide's contrast tints are backed by the printed ratio and a
-visually-hidden verdict (`src/pages/styleguide.astro:401`). Both carry a comment
+visually-hidden verdict (`src/pages/styleguide.astro:418`). Both carry a comment
 saying so. Keep it that way — a status that exists only as a hue is a bug.
 
 ## Colour
@@ -49,11 +49,11 @@ Use it once per view. The hero has one lemon gesture, not three.
 
 Sharp pink-red against the yellow. Two established jobs:
 
-- **The focus ring**, `pickled/500` (`tokens.css:165`). It is a non-text UI
+- **The focus ring**, `pickled/500` (`tokens.css:171`). It is a non-text UI
   indicator, so the 3.45–4.00:1 it scores on the grounds clears the 3.0 bar.
   Don't reuse this colour for decoration that could be mistaken for focus.
 - **Emphasis in running text**, `pickled/600` — the link hover colour
-  (`global.css:99`) and the italic serif emphasis in the hero slogan
+  (`global.css:100`) and the italic serif emphasis in the hero slogan
   (`index.astro:93`).
 
 **Limit:** `pickled/600` is the text-safe step (6.39:1 on white, 4.88:1 on
@@ -65,7 +65,7 @@ Sharp pink-red against the yellow. Two established jobs:
 
 Currently the quiet positive: the education dot in the CV timeline
 (`herbs/400`, `resume.astro:237`) and the "passes for body text" tint in the
-styleguide contrast table (`herbs/100`, `styleguide.astro:406`). Both are
+styleguide contrast table (`herbs/100`, `styleguide.astro:420`). Both are
 paired with words, per the rule above.
 
 **Limit:** `herbs/600` is the only step that carries body text on light
@@ -86,11 +86,11 @@ Warm-tinted, so they sit with the palette rather than against it.
 
 | Token                 | Job today                                                                                                                                                                                                       |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `neutral-100`         | The page ground. `body` background (`global.css:29`).                                                                                                                                                           |
+| `neutral-100`         | The page ground. `body` background (`global.css:30`).                                                                                                                                                           |
 | `neutral-white`       | The raised ground — things sitting above the page (the skip link, the styleguide callouts) — and the print ground, since the warm off-white is a screen decision and a CV prints on white (`resume.astro:297`). |
 | `neutral-200` / `300` | Hairlines. Section rules and borders (`index.astro:118,132`).                                                                                                                                                   |
 | `neutral-700`         | Quiet text — eyebrows, notes, footers, metadata. 7.91:1 on the page ground, so it is genuinely readable, not greyed-out decoration.                                                                             |
-| `neutral-black`       | Body and heading ink (`global.css:28`).                                                                                                                                                                         |
+| `neutral-black`       | Body and heading ink (`global.css:29`).                                                                                                                                                                         |
 
 **Limit:** `neutral-600` and lighter never carry body text — 600 is 3.40:1 on
 the page ground, which is large-text-and-UI only. `neutral-700` is the lightest
@@ -106,6 +106,9 @@ Two voices, deliberately:
   than paragraphs: the hero slogan is serif, `2xl`, regular weight, snug
   leading, italic on the emphasised word (`index.astro:82-94`). This is the
   site's one typographic gesture. It does not belong on body copy or headings.
+  That italic is currently browser-synthesised — Erode ships its italic as a
+  separate file that isn't vendored yet, so the slant is a sheared roman. See
+  the italic gap in [`design-to-code.md`](./design-to-code.md).
 
 Established patterns:
 
@@ -113,10 +116,10 @@ Established patterns:
   `letter-spacing-wide`, uppercase, `neutral-700` — eyebrows, link rows, the CV
   entry kind. Used seven times; it is a pattern, so match it rather than
   inventing a second one.
-- **Headings** come pre-set from `global.css:63-84` — semibold, tight leading,
+- **Headings** come pre-set from `global.css:64-85` — semibold, tight leading,
   tight tracking, balanced wrapping. Don't restate those in a page's scoped
   styles; pick the right level and let the cascade do it.
-- **Paragraphs** are capped at `--measure` (68ch) globally (`global.css:87`).
+- **Paragraphs** are capped at `--measure` (68ch) globally (`global.css:88`).
   For display text, a tighter explicit `max-width` in `ch` is the established
   override (`index.astro:83`).
 - `--font-size-xs` (8px) is not body text at any size. It exists for the type
@@ -134,7 +137,7 @@ things, big steps for the gaps between them.
 | Range         | Job                                                              |
 | ------------- | ---------------------------------------------------------------- |
 | `3xs` – `2xs` | Inside a component. Icon gaps, label offsets, hairline padding.  |
-| `xs` – `md`   | Between related elements. `md` is the workhorse — 26 uses.       |
+| `xs` – `md`   | Between related elements. `md` is the workhorse — 27 uses.       |
 | `lg`          | Between blocks within a section.                                 |
 | `xl` – `3xl`  | Section rhythm. `2xl` is the current page-section block padding. |
 
@@ -160,7 +163,7 @@ Rules:
 2. **Motion is never the only signal.** Same principle as colour. If an
    animation communicates something, the something must also survive with the
    animation removed.
-3. **Reduced motion is already handled globally** (`global.css:140-153`) and
+3. **Reduced motion is already handled globally** (`global.css:141-154`) and
    blankets every transition and animation on the site. Do not add a
    `prefers-reduced-motion` block to a page — it is noise, and a second
    implementation is a second thing to get wrong.
@@ -171,7 +174,7 @@ Rules:
 ## Elevation
 
 Three levels, one real use: the skip link lifts on focus with `--shadow-md`
-(`global.css:131`). This is a flat site — a shadow is for something genuinely
+(`global.css:132`). This is a flat site — a shadow is for something genuinely
 floating above the page, not for giving a card "definition".
 
 The Figma effect styles `Elevation / sm|md|lg` map to `--shadow-sm|md|lg` by
@@ -184,7 +187,7 @@ today and both must change together.
 `--radius-full` for pills and dots (the CV download button, the timeline dots).
 `--radius-lg` is unused so far.
 
-The focus ring applies `--radius-sm` globally (`global.css:109`), so a focusable
+The focus ring applies `--radius-sm` globally (`global.css:110`), so a focusable
 element with a different radius will show a ring that doesn't match its shape —
 override it in that element's own rule when it happens.
 
@@ -199,7 +202,7 @@ Genuinely undecided. An agent hitting one of these should ask rather than pick.
    before the first form or error message ships.
 2. **How far does herbs go?** Two small positive uses so far. Is it the status
    green generally, or is it the CV/education colour specifically?
-3. **What is `--font-mono` for on the site?** Currently only in the styleguide's
+3. **What is `--font-mono` for on the site?** Currently only on the styleguide itself, in its
    own value display. `--letter-spacing-extra-wide` is documented as the
    wide-tracked mono label and has no site usage — that pairing looks intended
    but has never been built.
