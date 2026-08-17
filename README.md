@@ -67,15 +67,15 @@ cleanly later.
 
 ## Stack
 
-| Concern    | Choice                                               | Why                                                                                         |
-| ---------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Framework  | [Astro](https://astro.build) 7, static output        | Ships HTML, no client JS by default. A portfolio doesn't need a runtime.                    |
-| Styling    | Plain CSS + custom properties                        | Tokens map 1:1 to Figma Variables. No build-tool indirection between design and code.       |
-| Content    | Astro content collections                            | Markdown + a zod schema that fails the build on bad data.                                   |
-| CMS        | [Decap CMS](https://decapcms.org)                    | Writes markdown back into the repo. No database, no vendor.                                 |
-| Fonts      | Satoshi Variable + Erode Variable (not yet vendored) | Designed in Figma; system fallbacks until the licensed files land. No third-party requests. |
-| Hosting    | GitHub Pages via GitHub Actions                      | Free, static, already where the code lives.                                                 |
-| Design I/O | Figma MCP server                                     | Lets an agent read the actual design instead of guessing from a screenshot.                 |
+| Concern    | Choice                                        | Why                                                                                   |
+| ---------- | --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Framework  | [Astro](https://astro.build) 7, static output | Ships HTML, no client JS by default. A portfolio doesn't need a runtime.              |
+| Styling    | Plain CSS + custom properties                 | Tokens map 1:1 to Figma Variables. No build-tool indirection between design and code. |
+| Content    | Astro content collections                     | Markdown + a zod schema that fails the build on bad data.                             |
+| CMS        | [Decap CMS](https://decapcms.org)             | Writes markdown back into the repo. No database, no vendor.                           |
+| Fonts      | Satoshi + Erode (Fontshare) + JetBrains Mono  | All variable, all self-hosted. No third-party requests.                               |
+| Hosting    | GitHub Pages via GitHub Actions               | Free, static, already where the code lives.                                           |
+| Design I/O | Figma MCP server                              | Lets an agent read the actual design instead of guessing from a screenshot.           |
 
 ## Quick start
 
@@ -120,6 +120,7 @@ docs/
 public/
   admin/config.yml      Decap CMS config (the shell is src/pages/admin/)
   cv/                   The CV as PDF — a build artefact of /resume, committed
+  fonts/                Satoshi + Erode woff2, self-hosted (see styles/fonts.css)
   og/default.png        Social share image
 scripts/
   render-cv.mjs         Prints the built /resume page to that PDF
@@ -133,6 +134,7 @@ src/
   pages/                File-based routes; admin/ is local-only, never deployed
   styles/
     tokens.css          Design tokens — one flat tier. Start here.
+    fonts.css           @font-face for the self-hosted faces
     global.css          Reset, type defaults, a11y helpers, .container
 CLAUDE.md               Working rules for agents. Read before changing anything.
 .mcp.json               Figma MCP server declaration
@@ -275,8 +277,23 @@ Split, because the code and the work aren't the same thing:
 - **[All rights reserved](LICENSE-CONTENT)** — the case studies, images, written
   copy, and the specific visual identity. Read it, link to it, quote it with
   attribution; don't republish it as your own.
+- **[Third-party fonts](public/fonts/LICENSE)** — neither of the above covers
+  the typefaces. See below.
 
 The structure is fair game. The specific expression isn't.
+
+### Typefaces
+
+**Satoshi** (Deni Anggara) and **Erode** (Nikhil Ranganathan, Jeremie Hornus)
+are © 2017–2021 [Indian Type Foundry](https://www.indiantypefoundry.com), both
+trademarks of the Indian Type Foundry, obtained through
+[Fontshare](https://www.fontshare.com) and self-hosted from `public/fonts/`
+under the ITF Free Font Licence.
+
+**JetBrains Mono** is © 2020 the JetBrains Mono Project Authors, under the SIL
+Open Font License 1.1, installed from npm.
+
+Terms and provenance for all three: [`public/fonts/LICENSE`](public/fonts/LICENSE).
 
 ---
 

@@ -166,21 +166,65 @@ accepted consequence of the flat structure, not an oversight.
 
 ### Fonts
 
-`font/sans` is **Satoshi Variable** and `font/serif` is **Erode Variable** (both
-Fontshare); `font/mono` is JetBrains Mono. `--font-sans` and `--font-serif` name
-them first, but **none of the three is vendored yet** — the stacks fall through
-to system faces, so the built site is currently rendering in fallbacks.
+All three faces are self-hosted. No CDN link and no third-party `@import`: the
+site makes no third-party requests, by decision.
 
-Two things to know before picking this up:
+Since this repo is public, the two Fontshare files are being redistributed, so
+provenance and terms for all three faces live in
+[`public/fonts/LICENSE`](../public/fonts/LICENSE) — copyright, foundry,
+designers, trademarks, and the licence notice quoted from the font binaries'
+own name table.
 
-1. Neither face is on npm or Fontsource. They have to be downloaded from
-   Fontshare and self-hosted from `public/fonts/`, under their licence. No CDN
-   link — the site makes no third-party requests, by decision.
-2. Neither face is available to the Figma MCP runtime either. It reports
-   _"the font family Satoshi Variable does not exist"_, which means they are
-   installed locally on Max's machine rather than shared with the file. Anyone
-   opening the file without them sees substituted type, and any script that has
-   to load a font before editing a text node or style will fail.
+One clause is worth knowing before you touch the type: the ITF notice requires
+that you _"identify the ITF fonts by name and credit the ITF's ownership of the
+trademarks and copyrights in any design or production credits."_ That is met by
+the Typefaces section of the README and the Families block on `/styleguide`. If
+either is rewritten, keep the attribution.
+
+| Token        | Family registered         | Axis           | Where it comes from                      |
+| ------------ | ------------------------- | -------------- | ---------------------------------------- |
+| `font/sans`  | `Satoshi Variable`        | `wght` 300–900 | `public/fonts/`, declared in `fonts.css` |
+| `font/serif` | `Erode Variable`          | `wght` 300–700 | `public/fonts/`, declared in `fonts.css` |
+| `font/mono`  | `JetBrains Mono Variable` | `wght` 100–800 | npm, imported in `BaseLayout.astro`      |
+
+**Family names matter more than they look.** A variable font registers itself
+under a different family name than its static siblings: the files are
+`'Satoshi Variable'` and `'Erode Variable'`, and the Fontsource package is
+`'JetBrains Mono Variable'`. Name the plain form in a token and every visitor
+without the static font installed silently gets a system face, with no error
+anywhere to notice. Each stack names the variable form first and the static form
+second.
+
+**The declared weight ranges are the real axis limits**, read out of the files
+rather than guessed. Declaring a range wider than the font carries invites the
+browser to synthesise weights outside it. If a face is ever replaced, re-read the
+`fvar` table and update `fonts.css` to match.
+
+For the mono face only `wght.css` is imported, not the package root — it is never
+italic here, and that halves the emitted files. Its subsets are
+`unicode-range`-scoped, so a latin page fetches one.
+
+#### The italic gap
+
+Fontshare ships italics as **separate `*-VariableItalic` files**; the upright
+variable files carry no italic axis at all. Only `Erode` needs one: the homepage
+slogan italicises a word (`.hero__slogan em` in `index.astro`), and that is
+currently a browser-synthesised slant rather than the drawn italic — a sheared
+roman, with none of the italic's own letterforms.
+
+To close it: add `Erode-VariableItalic.woff2` to `public/fonts/` and a second
+`@font-face` with the same `font-family` but `font-style: italic`. The browser
+picks it automatically; no token or component changes. Satoshi italic is not used
+anywhere in the site today, so it is not worth carrying until something needs it.
+
+#### Figma cannot see these fonts
+
+Neither Satoshi nor Erode is available to the Figma MCP runtime. It reports _"the
+font family Satoshi Variable does not exist"_, which means they are installed
+locally on Max's machine rather than shared with the file. Anyone opening the
+file without them sees substituted type, and any script that has to load a font
+before editing a text node or style will fail outright — as one did while this
+was being set up.
 
 ## Code Connect
 

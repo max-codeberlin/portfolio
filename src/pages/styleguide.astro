@@ -186,9 +186,10 @@ const shadows = ['sm', 'md', 'lg'];
 
       <h3>Families</h3>
       <p class="note">
-        Erode and Satoshi are the designed faces, but they are not vendored yet
-        &mdash; until the licensed files land in <code>public/fonts/</code>,
-        both samples below fall through to a system face.
+        All three are variable fonts, self-hosted. The italic below is
+        browser-synthesised &mdash; Fontshare ships italics as separate files
+        and Erode&rsquo;s is not vendored yet, so that word is a sheared roman
+        rather than the drawn italic.
       </p>
       <p class="sample-serif">
         Erode Variable &mdash; display and the slogan. <em
@@ -197,6 +198,20 @@ const shadows = ['sm', 'md', 'lg'];
       </p>
       <p class="sample-sans">
         Satoshi Variable &mdash; UI and body copy. The workhorse.
+      </p>
+      <p class="sample-mono">
+        JetBrains Mono &mdash; code, labels and tabular figures. 0123456789
+      </p>
+      <p class="note credit">
+        <strong>Satoshi</strong> (Deni Anggara) and <strong>Erode</strong>
+        (Nikhil Ranganathan, Jeremie Hornus) are &copy; 2017&ndash;2021
+        <a href="https://www.indiantypefoundry.com">Indian Type Foundry</a>,
+        both ITF trademarks, via <a href="https://www.fontshare.com"
+          >Fontshare</a
+        >.
+        <strong>JetBrains Mono</strong> is &copy; 2020 the JetBrains Mono Project
+        Authors, SIL OFL 1.1. Terms and provenance:
+        <code>public/fonts/LICENSE</code>.
       </p>
     </section>
 
@@ -505,6 +520,18 @@ const shadows = ['sm', 'md', 'lg'];
   .sample-sans {
     font-family: var(--font-sans);
     font-size: var(--font-size-lg);
+  }
+
+  .sample-mono {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-base);
+    letter-spacing: var(--letter-spacing-extra-wide);
+  }
+
+  /* The ITF licence requires the faces and the foundry be credited. */
+  .credit {
+    margin-block-start: var(--space-md);
+    max-width: var(--measure);
   }
 
   /* Spacing bars --------------------------------------------------------- */
