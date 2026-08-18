@@ -43,7 +43,7 @@ supplies the ratio, Max picks the colour.
 
 **Colour never carries meaning on its own.** Every place the site uses colour to
 say something, the thing is also said in text or shape: the CV timeline dots are
-backed by a written `.entry__kind` label (`src/pages/resume.astro:240`), and the
+backed by a written `.entry__kind` label (`src/pages/resume.astro:239`), and the
 styleguide's contrast tints are backed by the printed ratio and a
 visually-hidden verdict (`src/pages/styleguide.astro:422`). Both carry a comment
 saying so. Keep it that way — a status that exists only as a hue is a bug.
@@ -59,8 +59,8 @@ means ≥ 4.5, "large text and UI" means ≥ 3.0.
 The one colour that says this is Max's site. Used as **atmosphere and marker,
 never as ink**: the radial wash bleeding into the hero corner at 22% opacity
 (`src/pages/index.astro:53-58`), the underline that appears on link hover
-(`index.astro:125`, `resume.astro:179`), the timeline dot for work entries
-(`resume.astro:231`).
+(`index.astro:125`, `resume.astro:178`), the timeline dot for work entries
+(`resume.astro:230`).
 
 **Hard limit:** every lemon step is decorative-only on every light ground —
 `lemon/500` is 1.28:1 on `neutral/white` and 1.14:1 on the `neutral/100` page
@@ -79,7 +79,7 @@ Sharp pink-red against the yellow. Two established jobs:
   Don't reuse this colour for decoration that could be mistaken for focus.
 - **Emphasis**, also `pickled/500` — the link hover colour (`global.css:100`),
   the italic serif emphasis in the hero slogan (`index.astro:93`), the CV role
-  and organisation lines (`resume.astro:143,254`).
+  and organisation lines (`resume.astro:142,253`).
 
 **Limit:** the ramp ends at 500. `pickled/500` is **4.53:1 on `neutral/white`**
 and **4.00:1 on the `neutral/100` page ground** — so it clears AA for body text
@@ -97,7 +97,7 @@ ground matters for a future design, that is a question for Max — see
 ### Herbs — the settled green
 
 Currently the quiet positive: the education dot in the CV timeline
-(`herbs/400`, `resume.astro:237`) and the "passes for body text" tint in the
+(`herbs/400`, `resume.astro:236`) and the "passes for body text" tint in the
 styleguide contrast table (`herbs/100`, `styleguide.astro:426`). Both are
 paired with words, per the rule above.
 
@@ -120,7 +120,7 @@ Warm-tinted, so they sit with the palette rather than against it.
 | Token                 | Job today                                                                                                                                                                                                       |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `neutral-100`         | The page ground. `body` background (`global.css:30`).                                                                                                                                                           |
-| `neutral-white`       | The raised ground — things sitting above the page (the skip link, the styleguide callouts) — and the print ground, since the warm off-white is a screen decision and a CV prints on white (`resume.astro:297`). |
+| `neutral-white`       | The raised ground — things sitting above the page (the skip link, the styleguide callouts) — and the print ground, since the warm off-white is a screen decision and a CV prints on white (`resume.astro:296`). |
 | `neutral-200` / `300` | Hairlines. Section rules and borders (`index.astro:118,132`).                                                                                                                                                   |
 | `neutral-700`         | Quiet text — eyebrows, notes, footers, metadata. 7.91:1 on the page ground, so it is genuinely readable, not greyed-out decoration.                                                                             |
 | `neutral-black`       | Body and heading ink (`global.css:29`).                                                                                                                                                                         |
