@@ -47,7 +47,9 @@ or substitute a different step because the design appeared to need one.
 
 This does not weaken the accessibility rules below — contrast still gets
 measured and still gets reported. What it settles is who fixes it: the agent
-surfaces the number, Max picks the colour.
+surfaces the number, Max picks the colour. The long form, with the case that
+produced it, is [Who decides](docs/design-system.md#who-decides) in the design
+system rule book.
 
 **Tokens.** Never hardcode a value that exists as a token. No hex colours, no
 `16px`, no `font-family` in components. Use the token names directly —
